@@ -1,0 +1,39 @@
+import javax.annotation.processing.SupportedSourceVersion;
+import javax.sound.midi.SysexMessage;
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static int n;
+    static ArrayList<Integer> perm;
+    static boolean[] taken;
+
+    static void generate(int i){
+        if (i==n){
+            for (int j = 0; j < perm.size(); j++){
+                System.out.print(perm.get(j)+" ");
+            }
+            System.out.println();
+            return;
+        }
+
+        for (int j = 1; j <= n; j++){
+            if (taken[j]) continue;
+
+            taken[j] = true;
+            perm.add(j);
+            generate(i+1);
+            perm.remove(perm.size()-1);
+            taken[j] = false;
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        Scanner sc = new Scanner(System.in);
+        n = sc.nextInt();
+        taken = new boolean[n+1];
+        perm = new ArrayList<>();
+        generate(0);
+    }
+
+}
